@@ -27,6 +27,7 @@ class RazorPayClient:
             })
         except Exception as e: 
             raise ValidationError({
-                "status_code": 
+                "status_code": status.HTTP_400_BAD_REQUEST, 
+                "message": e
             })
         
