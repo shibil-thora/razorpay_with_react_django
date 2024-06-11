@@ -32,7 +32,7 @@ class CreateOrderAPIView(APIView):
 
 class TransactionAPIView(APIView): 
     def post(self, request): 
-        transaction_serializer = TransactionSerializer(data=request.data)
+        transaction_serializer = TransactionSerializer(request.data)
         if transaction_serializer.is_valid(): 
             rz_client.verify_payment(
                 razorpay_order_id=transaction_serializer.validated_data.get("order_id"), 
@@ -47,7 +47,7 @@ class TransactionAPIView(APIView):
             return Response(response, status=status.HTTP_201_CREATED)
         else: 
             response = {
-                "status_code": status.HTTP_201_CREATED, 
+                "status_code": status.HTTP_400_BAD_REQUEST, 
                 "message": "bad request", 
                 "error": transaction_serializer
             }
